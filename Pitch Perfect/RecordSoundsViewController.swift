@@ -11,15 +11,19 @@ import AVFoundation
 
 class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     @IBOutlet weak var recordinginProgressLabel: UILabel!
+    @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
     
     var audioRecorder: AVAudioRecorder!
     var recordedAudio: RecordedAudio!
+    var isRecording: Bool!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.r
+        
+        isRecording = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,6 +32,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
+        pauseButton.hidden = true
         stopButton.hidden = true
         recordButton.enabled = true
     }
@@ -35,6 +40,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     @IBAction func recordAudio(sender: UIButton) {
         println("in recordAudio")
         recordinginProgressLabel.hidden = false
+        pauseButton.hidden = false
         stopButton.hidden = false
         recordButton.enabled = false
         
@@ -58,6 +64,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.meteringEnabled = true
         audioRecorder.prepareToRecord()
         audioRecorder.record()
+        isRecording = true
     }
     
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
@@ -72,8 +79,10 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         } else {
             println("Recording was not successful")
             recordButton.enabled = false
+            pauseButton.hidden = true
             stopButton.hidden = true
         }
+        isRecording = false
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -83,8 +92,26 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             playSoundsVC.receivedAudio = data
         }
     }
+    
+    func resumeAudio() {
+        audioRecorder.prepareToRecord()
+        audioRecorder.record()
+    }
 
+    @IBAction func pauseAudio(sender: UIButton) {
+        if (isRecording == false) {
+            resumeAudio()
+            isRecording = true
+            recordinginProgressLabel.text = "recording"
+        } else {
+            audioRecorder.pause()
+            isRecording = false
+            recordinginProgressLabel.text = "paused"
+        }
+    }
+    
     @IBAction func stopAudio(sender: UIButton) {
+        recordinginProgressLabel.text = "recording"
         recordinginProgressLabel.hidden = true
         recordButton.enabled = true
         stopButton.hidden = true

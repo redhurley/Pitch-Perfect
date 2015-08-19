@@ -49,12 +49,21 @@
                                 </variation>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="HPr-Rv-6nm"/>
-                                        <include reference="l05-q0-pyQ"/>
+                                        <exclude reference="HPr-Rv-6nm"/>
+                                        <exclude reference="l05-q0-pyQ"/>
                                     </mask>
                                 </variation>
                                 <connections>
                                     <action selector="stopAudio:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="TyX-sf-gUw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k0Q-JA-QUl">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="pause">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pauseAudio:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="S6S-oi-5Tw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -62,26 +71,37 @@
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="ZW7-ht-Iut" secondAttribute="centerX" id="1Id-JD-MBd"/>
                             <constraint firstItem="pxs-Y3-w35" firstAttribute="top" secondItem="ks8-ck-ql9" secondAttribute="bottom" constant="8" id="HhF-qs-fif"/>
-                            <constraint firstAttribute="centerY" secondItem="ks8-ck-ql9" secondAttribute="centerY" id="PXa-Wj-Lqc"/>
+                            <constraint firstItem="pxs-Y3-w35" firstAttribute="top" secondItem="k0Q-JA-QUl" secondAttribute="bottom" constant="8" id="I8X-JV-4ad"/>
+                            <constraint firstAttribute="centerY" secondItem="ks8-ck-ql9" secondAttribute="centerY" id="PXa-Wj-Lqc">
+                                <variation key="widthClass=compact" constant="40"/>
+                            </constraint>
                             <constraint firstItem="ZW7-ht-Iut" firstAttribute="top" secondItem="ks8-ck-ql9" secondAttribute="bottom" constant="8" id="QdC-B2-W4P"/>
                             <constraint firstItem="pxs-Y3-w35" firstAttribute="top" secondItem="ZW7-ht-Iut" secondAttribute="bottom" constant="8" id="TWP-OV-8rD"/>
                             <constraint firstAttribute="centerX" secondItem="pxs-Y3-w35" secondAttribute="centerX" id="Xxi-qS-uqF"/>
                             <constraint firstAttribute="centerY" secondItem="pxs-Y3-w35" secondAttribute="centerY" id="aPf-ri-ei6"/>
                             <constraint firstAttribute="centerX" secondItem="ks8-ck-ql9" secondAttribute="centerX" id="mwL-Lc-xkN"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="pxs-Y3-w35" secondAttribute="bottom" constant="20" id="yui-WP-6bY"/>
+                            <constraint firstAttribute="centerX" secondItem="k0Q-JA-QUl" secondAttribute="centerX" constant="-0.5" id="sjp-Oh-iwj">
+                                <variation key="widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="pxs-Y3-w35" secondAttribute="bottom" constant="20" id="yui-WP-6bY">
+                                <variation key="widthClass=compact" constant="40"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="ks8-ck-ql9"/>
                                 <exclude reference="ZW7-ht-Iut"/>
                                 <exclude reference="pxs-Y3-w35"/>
+                                <exclude reference="k0Q-JA-QUl"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="PXa-Wj-Lqc"/>
                                 <exclude reference="mwL-Lc-xkN"/>
                                 <exclude reference="1Id-JD-MBd"/>
                                 <exclude reference="QdC-B2-W4P"/>
+                                <exclude reference="sjp-Oh-iwj"/>
                                 <exclude reference="HhF-qs-fif"/>
+                                <exclude reference="I8X-JV-4ad"/>
                                 <exclude reference="TWP-OV-8rD"/>
                                 <exclude reference="Xxi-qS-uqF"/>
                                 <exclude reference="aPf-ri-ei6"/>
@@ -93,13 +113,16 @@
                                 <include reference="ks8-ck-ql9"/>
                                 <include reference="ZW7-ht-Iut"/>
                                 <include reference="pxs-Y3-w35"/>
+                                <include reference="k0Q-JA-QUl"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="PXa-Wj-Lqc"/>
                                 <include reference="mwL-Lc-xkN"/>
                                 <include reference="1Id-JD-MBd"/>
                                 <include reference="QdC-B2-W4P"/>
+                                <include reference="sjp-Oh-iwj"/>
                                 <exclude reference="HhF-qs-fif"/>
+                                <include reference="I8X-JV-4ad"/>
                                 <exclude reference="TWP-OV-8rD"/>
                                 <include reference="Xxi-qS-uqF"/>
                                 <exclude reference="aPf-ri-ei6"/>
@@ -109,6 +132,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Record" id="70s-Zf-Amx"/>
                     <connections>
+                        <outlet property="pauseButton" destination="k0Q-JA-QUl" id="ASH-r5-XyM"/>
                         <outlet property="recordButton" destination="ks8-ck-ql9" id="fX3-bG-TCZ"/>
                         <outlet property="recordinginProgressLabel" destination="ZW7-ht-Iut" id="UK9-sU-cva"/>
                         <outlet property="stopButton" destination="pxs-Y3-w35" id="kpa-g2-lni"/>
@@ -128,27 +152,28 @@
                         <viewControllerLayoutGuide type="bottom" id="kLW-0e-q7R"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xAg-Ht-LFO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fn-Oh-nej" userLabel="stop">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fn-Oh-nej" userLabel="stop">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="NlU-Wm-C8i"/>
-                                    <constraint firstAttribute="height" constant="50" id="yBa-gf-qX9"/>
+                                    <constraint firstAttribute="height" constant="80" id="3Jx-W5-o2P"/>
+                                    <constraint firstAttribute="width" constant="80" id="6u4-M6-ZB9"/>
                                 </constraints>
                                 <state key="normal" image="stop">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="yBa-gf-qX9"/>
-                                        <exclude reference="NlU-Wm-C8i"/>
+                                        <exclude reference="3Jx-W5-o2P"/>
+                                        <exclude reference="6u4-M6-ZB9"/>
                                     </mask>
                                 </variation>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="yBa-gf-qX9"/>
-                                        <include reference="NlU-Wm-C8i"/>
+                                        <include reference="3Jx-W5-o2P"/>
+                                        <include reference="6u4-M6-ZB9"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -211,15 +236,17 @@
                                 <variation key="widthClass=compact" constant="40"/>
                             </constraint>
                             <constraint firstItem="1iv-6a-PD6" firstAttribute="top" secondItem="ia4-Py-7tw" secondAttribute="bottom" constant="50" id="XmE-IA-u2H">
-                                <variation key="widthClass=compact" constant="100"/>
+                                <variation key="widthClass=compact" constant="80"/>
                             </constraint>
                             <constraint firstItem="xUY-H5-IkL" firstAttribute="top" secondItem="ia4-Py-7tw" secondAttribute="bottom" constant="50" id="Zor-Tg-3ee">
-                                <variation key="widthClass=compact" constant="100"/>
+                                <variation key="widthClass=compact" constant="80"/>
                             </constraint>
                             <constraint firstItem="3Bp-nr-mhb" firstAttribute="top" secondItem="1iv-6a-PD6" secondAttribute="bottom" constant="50" id="bkx-wm-w4I"/>
-                            <constraint firstAttribute="centerX" secondItem="0Fn-Oh-nej" secondAttribute="centerX" id="gHe-hS-gPX"/>
+                            <constraint firstAttribute="centerX" secondItem="0Fn-Oh-nej" secondAttribute="centerX" id="gHe-hS-gPX">
+                                <variation key="widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="kLW-0e-q7R" firstAttribute="top" secondItem="0Fn-Oh-nej" secondAttribute="bottom" constant="20" id="nYh-Sa-pwf">
-                                <variation key="widthClass=compact" constant="40"/>
+                                <variation key="widthClass=compact" constant="20"/>
                             </constraint>
                             <constraint firstAttribute="centerY" secondItem="0Fn-Oh-nej" secondAttribute="centerY" constant="-255" id="yI1-Jv-Fro"/>
                         </constraints>
@@ -268,6 +295,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="stopButton" destination="0Fn-Oh-nej" id="jgQ-oh-QiQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dah-UO-3hT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -297,6 +327,7 @@
         <image name="darth-vader" width="100" height="100"/>
         <image name="fast" width="100" height="100"/>
         <image name="microphone" width="40" height="98"/>
+        <image name="pause" width="80" height="80"/>
         <image name="slow" width="100" height="100"/>
         <image name="stop" width="98" height="98"/>
     </resources>

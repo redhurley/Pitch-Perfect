@@ -10,10 +10,11 @@ import UIKit
 import AVFoundation
 
 class PlaySoundsViewController: UIViewController {
+    @IBOutlet weak var stopButton: UIButton!
     
     var audioPlayer: AVAudioPlayer!
+    var audioPlayerNode: AVAudioPlayerNode!
     var receivedAudio: RecordedAudio!
-    // Create AVAudioEngine object
     var audioEngine: AVAudioEngine!
     var audioFile: AVAudioFile!
     
@@ -47,6 +48,7 @@ class PlaySoundsViewController: UIViewController {
         audioPlayer.stop()
         audioPlayer.currentTime = 0.0
         audioPlayer.play()
+        stopButton.enabled = true
     }
     
     @IBAction func slowAudioButtonPressed(sender: UIButton) {
@@ -61,7 +63,6 @@ class PlaySoundsViewController: UIViewController {
     
     @IBAction func chipmunkAudioButtonPressed(sender: UIButton) {
         playAudioWithVariablePitch(1000)
-        
     }
     
     @IBAction func darthVaderAudioButtonPressed(sender: UIButton) {
@@ -72,9 +73,10 @@ class PlaySoundsViewController: UIViewController {
         audioPlayer.stop()
         audioEngine.stop()
         audioEngine.reset()
+        stopButton.enabled = true
         
-        // Create AVAudioPlayerNode object
-        var audioPlayerNode = AVAudioPlayerNode()
+        // Initialize AVAudioPlayerNode object
+        audioPlayerNode = AVAudioPlayerNode()
         // Attach AVAudioPlayerNode object to AVAudioEngine
         audioEngine.attachNode(audioPlayerNode)
         
@@ -96,7 +98,12 @@ class PlaySoundsViewController: UIViewController {
     }
     
     @IBAction func stopButtonPressed(sender: UIButton) {
-        audioPlayer.stop()
+        if (audioPlayer.playing) {
+            audioPlayer.stop()
+        } else {
+            audioPlayerNode.stop()
+        }
+        stopButton.enabled = false
     }
     
 }
