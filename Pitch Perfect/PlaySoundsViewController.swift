@@ -27,12 +27,6 @@ class PlaySoundsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-//        if var filePath = NSBundle.mainBundle().pathForResource("movie_quote", ofType: "mp3") {
-//            var filePathURL = NSURL(fileURLWithPath: filePath)
-//        } else {
-//            println("the filePath is empty")
-//        }
-        
         audioEngine = AVAudioEngine()
         
         audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathURL, error: nil)
@@ -43,7 +37,6 @@ class PlaySoundsViewController: UIViewController {
         
         // Initialize AVAudioFile() and convert file from NSURL to AVAudioFile
         audioFile = AVAudioFile(forReading: receivedAudio.filePathURL, error: nil)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -112,7 +105,6 @@ class PlaySoundsViewController: UIViewController {
     
     func playAudioWithVariablePitch(pitch: Float) {
         stopAllPlayers()
-        audioEngine.reset()
         
         audioPlayerNode = AVAudioPlayerNode()
         
@@ -143,6 +135,7 @@ class PlaySoundsViewController: UIViewController {
         audioPlayer.stop()
         audioPlayer2.stop()
         audioEngine.stop()
+        audioEngine.reset()
     }
     
     @IBAction func stopButtonPressed(sender: UIButton) {
