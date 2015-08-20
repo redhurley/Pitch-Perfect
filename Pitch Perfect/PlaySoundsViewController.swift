@@ -72,6 +72,7 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     
     @IBAction func reverbAudioButtonPressed(sender: UIButton) {
         stopAllPlayers()
+        resetRate()
         
         audioPlayerNode = AVAudioPlayerNode()
         
@@ -100,6 +101,7 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     
     @IBAction func echoAudioButtonPressed(sender: UIButton) {
         stopAllPlayers()
+        resetRate()
         playAudio()
         
         audioPlayer2.currentTime = 0.0
@@ -139,6 +141,11 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
         
         audioPlayerNode.play()
         stopButton.enabled = true
+    }
+    
+    func resetRate() {
+        audioPlayer.rate = 1.0
+        audioPlayer2.rate = 1.0
     }
     
     func stopAllPlayers() {
