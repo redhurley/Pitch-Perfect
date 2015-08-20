@@ -26,6 +26,12 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        let session = AVAudioSession.sharedInstance()
+        var error: NSError?
+        session.setCategory(AVAudioSessionCategoryPlayAndRecord, error: &error)
+        session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker, error: &error)
+        session.setActive(true, error: &error)
+        
         audioEngine = AVAudioEngine()
         
         audioPlayer = AVAudioPlayer(contentsOfURL: receivedAudio.filePathURL, error: nil)
