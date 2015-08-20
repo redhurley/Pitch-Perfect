@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class PlaySoundsViewController: UIViewController {
+class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet weak var stopButton: UIButton!
     
     var audioEngine: AVAudioEngine!
@@ -24,7 +24,6 @@ class PlaySoundsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         
         audioEngine = AVAudioEngine()
@@ -37,6 +36,8 @@ class PlaySoundsViewController: UIViewController {
         
         // Initialize AVAudioFile() and convert file from NSURL to AVAudioFile
         audioFile = AVAudioFile(forReading: receivedAudio.filePathURL, error: nil)
+        
+        audioPlayer.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,7 +87,11 @@ class PlaySoundsViewController: UIViewController {
         audioEngine.connect(audioPlayerNode, to: reverbEffect, format: nil)
         audioEngine.connect(reverbEffect, to: audioEngine.outputNode, format: nil)
         
-        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.stopButton.enabled = false
+            }
+        })
         audioEngine.startAndReturnError(nil)
         
         audioPlayerNode.play()
@@ -124,7 +129,12 @@ class PlaySoundsViewController: UIViewController {
         // Connect AVAudioUnitTimePitch to the output (speakers)
         audioEngine.connect(changePitchEffect, to: audioEngine.outputNode, format: nil)
         
-        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        // TODO: stopButton disables too early
+        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.stopButton.enabled = false
+            }
+        })
         audioEngine.startAndReturnError(nil)
         
         audioPlayerNode.play()
@@ -140,6 +150,10 @@ class PlaySoundsViewController: UIViewController {
     
     @IBAction func stopButtonPressed(sender: UIButton) {
         stopAllPlayers()
+        stopButton.enabled = false
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
         stopButton.enabled = false
     }
 }

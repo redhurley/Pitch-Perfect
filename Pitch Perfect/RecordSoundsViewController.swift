@@ -39,10 +39,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
 
     @IBAction func recordAudio(sender: UIButton) {
         println("in recordAudio")
-        recordinginProgressLabel.text = "recording"
-        pauseButton.hidden = false
-        stopButton.hidden = false
-        recordButton.enabled = false
         
         // Record the user's voice
         // Get path of document directory within app
@@ -64,7 +60,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.meteringEnabled = true
         audioRecorder.prepareToRecord()
         audioRecorder.record()
-        isRecording = true
+        recordingInProgress()
     }
     
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
@@ -72,7 +68,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             // Step 1 - Save the recorded audio
             recordedAudio = RecordedAudio(filePathURL: recorder.url, title: recorder.url.lastPathComponent!)
             // Step 2 - Move to the next scene aka perform segue
-            self.performSegueWithIdentifier("stopRecording", sender: recordedAudio)
+            performSegueWithIdentifier("stopRecording", sender: recordedAudio)
         } else {
             println("Recording was not successful")
             recordinginProgressLabel.text = "tap to try recording again"
@@ -95,16 +91,26 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.prepareToRecord()
         audioRecorder.record()
     }
+    
+    func recordingInProgress() {
+        isRecording = true
+        recordinginProgressLabel.text = "recording"
+        pauseButton.hidden = false
+        stopButton.hidden = false
+        recordButton.enabled = false
+        pauseButton.enabled = true
+    }
 
     @IBAction func pauseAudio(sender: UIButton) {
         if (isRecording == false) {
             resumeAudio()
-            isRecording = true
-            recordinginProgressLabel.text = "recording"
+            recordingInProgress()
         } else {
             audioRecorder.pause()
             isRecording = false
             recordinginProgressLabel.text = "paused"
+            recordButton.enabled = true
+            pauseButton.enabled = false
         }
     }
     

@@ -59,9 +59,25 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k0Q-JA-QUl">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="TvJ-aR-1ic"/>
+                                    <constraint firstAttribute="height" constant="80" id="cko-Q1-VeW"/>
+                                </constraints>
                                 <state key="normal" image="pause">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="TvJ-aR-1ic"/>
+                                        <exclude reference="cko-Q1-VeW"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="TvJ-aR-1ic"/>
+                                        <include reference="cko-Q1-VeW"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="pauseAudio:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="S6S-oi-5Tw"/>
                                 </connections>
@@ -73,7 +89,7 @@
                             <constraint firstItem="pxs-Y3-w35" firstAttribute="top" secondItem="ks8-ck-ql9" secondAttribute="bottom" constant="8" id="HhF-qs-fif"/>
                             <constraint firstItem="pxs-Y3-w35" firstAttribute="top" secondItem="k0Q-JA-QUl" secondAttribute="bottom" constant="8" id="I8X-JV-4ad"/>
                             <constraint firstAttribute="centerY" secondItem="ks8-ck-ql9" secondAttribute="centerY" id="PXa-Wj-Lqc">
-                                <variation key="widthClass=compact" constant="40"/>
+                                <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="ZW7-ht-Iut" firstAttribute="top" secondItem="ks8-ck-ql9" secondAttribute="bottom" constant="8" id="QdC-B2-W4P"/>
                             <constraint firstItem="pxs-Y3-w35" firstAttribute="top" secondItem="ZW7-ht-Iut" secondAttribute="bottom" constant="8" id="TWP-OV-8rD"/>
@@ -84,7 +100,7 @@
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="pxs-Y3-w35" secondAttribute="bottom" constant="20" id="yui-WP-6bY">
-                                <variation key="widthClass=compact" constant="40"/>
+                                <variation key="widthClass=compact" constant="10"/>
                             </constraint>
                         </constraints>
                         <variation key="default">
